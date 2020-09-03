@@ -1,0 +1,112 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf0890"
+		},
+		"Azure_Insurance_LS1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Azure_Insurance_LS1'"
+		},
+		"Insurance_LS2_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Insurance_LS2'"
+		},
+		"Insurance_file_LS_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Insurance_file_LS'"
+		},
+		"getmetadataLS_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'getmetadataLS'"
+		},
+		"Insurance_LS2_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "//DESKTOP-2K6COFT/Users/Poloumi/Desktop/"
+		},
+		"Insurance_LS2_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "POLOUMI"
+		},
+		"Insurance_file_LS_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "//DESKTOP-2K6COFT/Users/Poloumi/Desktop/"
+		},
+		"Insurance_file_LS_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "POLOUMI"
+		},
+		"getmetadataLS_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "\\\\DESKTOP-2K6COFT\\Users\\Poloumi\\Desktop"
+		},
+		"getmetadataLS_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "POLOUMI"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf0890_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"Azure_Insurance_LS1_connectionString": {
+						"value": "[parameters('Azure_Insurance_LS1_connectionString')]"
+					},
+					"Insurance_LS2_password": {
+						"value": "[parameters('Insurance_LS2_password')]"
+					},
+					"Insurance_file_LS_password": {
+						"value": "[parameters('Insurance_file_LS_password')]"
+					},
+					"getmetadataLS_password": {
+						"value": "[parameters('getmetadataLS_password')]"
+					},
+					"Insurance_LS2_properties_typeProperties_host": {
+						"value": "[parameters('Insurance_LS2_properties_typeProperties_host')]"
+					},
+					"Insurance_LS2_properties_typeProperties_userId": {
+						"value": "[parameters('Insurance_LS2_properties_typeProperties_userId')]"
+					},
+					"Insurance_file_LS_properties_typeProperties_host": {
+						"value": "[parameters('Insurance_file_LS_properties_typeProperties_host')]"
+					},
+					"Insurance_file_LS_properties_typeProperties_userId": {
+						"value": "[parameters('Insurance_file_LS_properties_typeProperties_userId')]"
+					},
+					"getmetadataLS_properties_typeProperties_host": {
+						"value": "[parameters('getmetadataLS_properties_typeProperties_host')]"
+					},
+					"getmetadataLS_properties_typeProperties_userId": {
+						"value": "[parameters('getmetadataLS_properties_typeProperties_userId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

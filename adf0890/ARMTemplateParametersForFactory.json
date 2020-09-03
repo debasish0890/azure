@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf0890"
+		},
+		"Azure_Insurance_LS1_connectionString": {
+			"value": ""
+		},
+		"Insurance_LS2_password": {
+			"value": ""
+		},
+		"Insurance_file_LS_password": {
+			"value": ""
+		},
+		"getmetadataLS_password": {
+			"value": ""
+		},
+		"Insurance_LS2_properties_typeProperties_host": {
+			"value": "//DESKTOP-2K6COFT/Users/Poloumi/Desktop/"
+		},
+		"Insurance_LS2_properties_typeProperties_userId": {
+			"value": "POLOUMI"
+		},
+		"Insurance_file_LS_properties_typeProperties_host": {
+			"value": "//DESKTOP-2K6COFT/Users/Poloumi/Desktop/"
+		},
+		"Insurance_file_LS_properties_typeProperties_userId": {
+			"value": "POLOUMI"
+		},
+		"getmetadataLS_properties_typeProperties_host": {
+			"value": "\\\\DESKTOP-2K6COFT\\Users\\Poloumi\\Desktop"
+		},
+		"getmetadataLS_properties_typeProperties_userId": {
+			"value": "POLOUMI"
+		}
+	}
+}
