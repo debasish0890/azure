@@ -1,0 +1,20 @@
+{
+	"name": "getmetadata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "getmetadataLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
