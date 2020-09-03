@@ -414,10 +414,11 @@
 								"parameters": {}
 							},
 							"fieldList": [
-								"childItems"
+								"itemName"
 							],
 							"storeSettings": {
-								"type": "FileServerReadSettings"
+								"type": "FileServerReadSettings",
+								"recursive": true
 							},
 							"formatSettings": {
 								"type": "DelimitedTextReadSettings"
