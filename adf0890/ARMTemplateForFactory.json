@@ -147,7 +147,7 @@
 								"parameters": {}
 							},
 							"fieldList": [
-								"itemName"
+								"childItems"
 							],
 							"storeSettings": {
 								"type": "FileServerReadSettings",
