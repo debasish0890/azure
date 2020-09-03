@@ -1,0 +1,17 @@
+{
+	"name": "getmetadataLS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "\\\\DESKTOP-2K6COFT\\Users\\Poloumi\\Desktop",
+			"userId": "POLOUMI",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIyNWZlYTliZi04N2NmLTQ2ZjEtOTk1NS1jMzAzZWNlNTFkOWUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
