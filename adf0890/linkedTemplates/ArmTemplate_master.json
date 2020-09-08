@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Insurance_file_LS'"
 		},
+		"SalesDataLS_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SalesDataLS'"
+		},
 		"getmetadataLS_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'getmetadataLS'"
@@ -38,6 +42,14 @@
 		"Insurance_file_LS_properties_typeProperties_userId": {
 			"type": "string",
 			"defaultValue": "POLOUMI"
+		},
+		"SalesDataLS_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "\\\\DESKTOP-P1O5V64\\Azure\\"
+		},
+		"SalesDataLS_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "Debasish"
 		},
 		"getmetadataLS_properties_typeProperties_host": {
 			"type": "string",
@@ -83,6 +95,9 @@
 					"Insurance_file_LS_password": {
 						"value": "[parameters('Insurance_file_LS_password')]"
 					},
+					"SalesDataLS_password": {
+						"value": "[parameters('SalesDataLS_password')]"
+					},
 					"getmetadataLS_password": {
 						"value": "[parameters('getmetadataLS_password')]"
 					},
@@ -97,6 +112,12 @@
 					},
 					"Insurance_file_LS_properties_typeProperties_userId": {
 						"value": "[parameters('Insurance_file_LS_properties_typeProperties_userId')]"
+					},
+					"SalesDataLS_properties_typeProperties_host": {
+						"value": "[parameters('SalesDataLS_properties_typeProperties_host')]"
+					},
+					"SalesDataLS_properties_typeProperties_userId": {
+						"value": "[parameters('SalesDataLS_properties_typeProperties_userId')]"
 					},
 					"getmetadataLS_properties_typeProperties_host": {
 						"value": "[parameters('getmetadataLS_properties_typeProperties_host')]"

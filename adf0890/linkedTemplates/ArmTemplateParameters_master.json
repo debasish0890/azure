@@ -14,6 +14,9 @@
 		"Insurance_file_LS_password": {
 			"value": ""
 		},
+		"SalesDataLS_password": {
+			"value": ""
+		},
 		"getmetadataLS_password": {
 			"value": ""
 		},
@@ -28,6 +31,12 @@
 		},
 		"Insurance_file_LS_properties_typeProperties_userId": {
 			"value": "POLOUMI"
+		},
+		"SalesDataLS_properties_typeProperties_host": {
+			"value": "\\\\DESKTOP-P1O5V64\\Azure\\"
+		},
+		"SalesDataLS_properties_typeProperties_userId": {
+			"value": "Debasish"
 		},
 		"getmetadataLS_properties_typeProperties_host": {
 			"value": "\\\\DESKTOP-2K6COFT\\Users\\Poloumi\\Desktop"
