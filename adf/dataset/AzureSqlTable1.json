@@ -10,7 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "insurance_new_2"
+			"table": "salesdata"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
