@@ -27,7 +27,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "truncate table dbo.salesdata",
+						"preCopyScript": "if  object_id('dbo.salesdata') is not null\ntruncate table dbo.salesdata",
 						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
