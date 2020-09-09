@@ -12,9 +12,17 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable2",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [],
-			"script": "source(output(\n\t\tstreet as string,\n\t\tcity as string,\n\t\tzip as string,\n\t\tstate as string,\n\t\tbeds as string,\n\t\tbaths as string,\n\t\tsq__ft as string,\n\t\ttype as string,\n\t\tsale_date as string,\n\t\tprice as string,\n\t\tlatitude as string,\n\t\tlongitude as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true) ~> source1"
+			"script": "source(output(\n\t\tstreet as string,\n\t\tcity as string,\n\t\tzip as string,\n\t\tstate as string,\n\t\tbeds as string,\n\t\tbaths as string,\n\t\tsq__ft as string,\n\t\ttype as string,\n\t\tsale_date as string,\n\t\tprice as string,\n\t\tlatitude as string,\n\t\tlongitude as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true) ~> source1\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 		}
 	}
 }
