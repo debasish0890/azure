@@ -17,7 +17,18 @@
 				"frequency": "Month",
 				"interval": 1,
 				"startTime": "2020-09-10T00:56:00.000Z",
-				"timeZone": "UTC"
+				"timeZone": "UTC",
+				"schedule": {
+					"minutes": [
+						4
+					],
+					"hours": [
+						1
+					],
+					"monthDays": [
+						10
+					]
+				}
 			}
 		}
 	}
