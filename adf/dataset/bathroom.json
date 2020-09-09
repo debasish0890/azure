@@ -1,0 +1,26 @@
+{
+	"name": "bathroom",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Insurance_LS1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "bath",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "bdesc",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "bathroom"
+		}
+	}
+}
