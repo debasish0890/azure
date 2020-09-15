@@ -287,7 +287,7 @@
 												"typeProperties": {
 													"source": {
 														"type": "AzureSqlSource",
-														"sqlReaderQuery": "select * from @(item().Table_Name)",
+														"sqlReaderQuery": "select * from @{item().Table_Name}",
 														"queryTimeout": "02:00:00",
 														"partitionOption": "None"
 													},
@@ -317,7 +317,7 @@
 														"referenceName": "AzureSqlTable8",
 														"type": "DatasetReference",
 														"parameters": {
-															"TableName": "@(item().Table_Name)"
+															"TableName": "@{item().Table_Name}"
 														}
 													}
 												]
