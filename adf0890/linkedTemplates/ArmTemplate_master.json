@@ -31,6 +31,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'getmetadataLS'"
 		},
+		"sourcedb_LS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'sourcedb_LS'"
+		},
 		"Insurance_LS2_properties_typeProperties_host": {
 			"type": "string",
 			"defaultValue": "//DESKTOP-2K6COFT/Users/Poloumi/Desktop/"
@@ -95,6 +99,9 @@
 					},
 					"Azure_Insurance_LS1_connectionString": {
 						"value": "[parameters('Azure_Insurance_LS1_connectionString')]"
+					},
+					"sourcedb_LS_connectionString": {
+						"value": "[parameters('sourcedb_LS_connectionString')]"
 					},
 					"Insurance_LS2_password": {
 						"value": "[parameters('Insurance_LS2_password')]"

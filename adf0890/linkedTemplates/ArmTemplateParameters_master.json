@@ -23,6 +23,9 @@
 		"getmetadataLS_password": {
 			"value": ""
 		},
+		"sourcedb_LS_connectionString": {
+			"value": ""
+		},
 		"Insurance_LS2_properties_typeProperties_host": {
 			"value": "//DESKTOP-2K6COFT/Users/Poloumi/Desktop/"
 		},
