@@ -83,7 +83,14 @@
 									{
 										"name": "Copy data1",
 										"type": "Copy",
-										"dependsOn": [],
+										"dependsOn": [
+											{
+												"activity": "act_get_cfg",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
 										"policy": {
 											"timeout": "7.00:00:00",
 											"retry": 0,
@@ -95,7 +102,10 @@
 										"typeProperties": {
 											"source": {
 												"type": "AzureSqlSource",
-												"sqlReaderQuery": "select * from @{item().Table_Name}",
+												"sqlReaderQuery": {
+													"value": "select * from @{item().Table_Name}\nwhere convert(datetime,Last_Updated_Date)> convert(datetime, @{activity('act_get_cfg').output.firstRow.Max_LastUpdatedDate})",
+													"type": "Expression"
+												},
 												"queryTimeout": "02:00:00",
 												"partitionOption": "None"
 											},
@@ -128,6 +138,31 @@
 												}
 											}
 										]
+									},
+									{
+										"name": "act_get_cfg",
+										"type": "Lookup",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "AzureSqlSource",
+												"sqlReaderQuery": "select Max_LastUpdatedDate from dbo.cfg where Table_Name='@{item().Table_Name}'",
+												"queryTimeout": "02:00:00",
+												"partitionOption": "None"
+											},
+											"dataset": {
+												"referenceName": "AzureSqlTable9",
+												"type": "DatasetReference"
+											}
+										}
 									}
 								]
 							}
