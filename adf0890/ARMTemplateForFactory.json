@@ -271,6 +271,135 @@
 											"value": "@bool(item().Incremental_Full_Load)",
 											"type": "Expression"
 										},
+										"ifFalseActivities": [
+											{
+												"name": "Copy data full load",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "AzureSqlSource",
+														"sqlReaderQuery": {
+															"value": "select * from @{item().Table_Name}\n",
+															"type": "Expression"
+														},
+														"queryTimeout": "02:00:00",
+														"partitionOption": "None"
+													},
+													"sink": {
+														"type": "AzureSqlSink",
+														"tableOption": "autoCreate"
+													},
+													"enableStaging": false,
+													"translator": {
+														"type": "TabularTranslator",
+														"typeConversion": true,
+														"typeConversionSettings": {
+															"allowDataTruncation": true,
+															"treatBooleanAsNumber": false
+														}
+													}
+												},
+												"inputs": [
+													{
+														"referenceName": "AzureSqlTable7",
+														"type": "DatasetReference",
+														"parameters": {}
+													}
+												],
+												"outputs": [
+													{
+														"referenceName": "AzureSqlTable8",
+														"type": "DatasetReference",
+														"parameters": {
+															"TableName": "@{item().Table_Name}"
+														}
+													}
+												]
+											},
+											{
+												"name": "get_maxupdatedt_fullload",
+												"type": "Lookup",
+												"dependsOn": [
+													{
+														"activity": "Copy data full load",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "AzureSqlSource",
+														"sqlReaderQuery": {
+															"value": "select max(Last_Updated_Date) maxDt from @{item().Table_Name}",
+															"type": "Expression"
+														},
+														"queryTimeout": "02:00:00",
+														"partitionOption": "None"
+													},
+													"dataset": {
+														"referenceName": "AzureSqlTable8",
+														"type": "DatasetReference",
+														"parameters": {
+															"TableName": "@{item().Table_Name}"
+														}
+													}
+												}
+											},
+											{
+												"name": "update_cfg_copy1",
+												"type": "Lookup",
+												"dependsOn": [
+													{
+														"activity": "get_maxupdatedt_fullload",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "AzureSqlSource",
+														"sqlReaderQuery": {
+															"value": "update dbo.cfg set Max_LastUpdatedDate=convert(datetime, '@{activity('get_maxupdatedt_fullload').output.firstRow.maxDt}')\nwhere Table_Name='@{item().Table_Name}'\n\nselect 1",
+															"type": "Expression"
+														},
+														"queryTimeout": "02:00:00",
+														"partitionOption": "None"
+													},
+													"dataset": {
+														"referenceName": "AzureSqlTable9",
+														"type": "DatasetReference",
+														"parameters": {}
+													}
+												}
+											}
+										],
 										"ifTrueActivities": [
 											{
 												"name": "Copy data1",
@@ -295,7 +424,7 @@
 													"source": {
 														"type": "AzureSqlSource",
 														"sqlReaderQuery": {
-															"value": "select * from @{item().Table_Name}\nwhere convert(datetime,Last_Updated_Date)> convert(datetime, @{activity('act_get_cfg').output.firstRow.Max_LastUpdatedDate})",
+															"value": "select * from @{item().Table_Name}\nwhere convert(datetime,Last_Updated_Date)> convert(datetime, '@{activity('act_get_cfg').output.firstRow.Max_LastUpdatedDate}')",
 															"type": "Expression"
 														},
 														"queryTimeout": "02:00:00",
@@ -349,6 +478,80 @@
 														"type": "AzureSqlSource",
 														"sqlReaderQuery": {
 															"value": "select Max_LastUpdatedDate from dbo.cfg where Table_Name='@{item().Table_Name}'",
+															"type": "Expression"
+														},
+														"queryTimeout": "02:00:00",
+														"partitionOption": "None"
+													},
+													"dataset": {
+														"referenceName": "AzureSqlTable9",
+														"type": "DatasetReference",
+														"parameters": {}
+													}
+												}
+											},
+											{
+												"name": "get_maxupdatedt",
+												"type": "Lookup",
+												"dependsOn": [
+													{
+														"activity": "Copy data1",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "AzureSqlSource",
+														"sqlReaderQuery": {
+															"value": "select max(Last_Updated_Date) maxDt from @{item().Table_Name}",
+															"type": "Expression"
+														},
+														"queryTimeout": "02:00:00",
+														"partitionOption": "None"
+													},
+													"dataset": {
+														"referenceName": "AzureSqlTable8",
+														"type": "DatasetReference",
+														"parameters": {
+															"TableName": "@{item().Table_Name}"
+														}
+													}
+												}
+											},
+											{
+												"name": "update_cfg",
+												"type": "Lookup",
+												"dependsOn": [
+													{
+														"activity": "get_maxupdatedt",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "AzureSqlSource",
+														"sqlReaderQuery": {
+															"value": "update dbo.cfg set Max_LastUpdatedDate=convert(datetime, '@{activity('get_maxupdatedt').output.firstRow.maxDt}')\nwhere Table_Name='@{item().Table_Name}'\n\nselect 1",
 															"type": "Expression"
 														},
 														"queryTimeout": "02:00:00",
