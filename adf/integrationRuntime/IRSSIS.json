@@ -21,6 +21,16 @@
 				},
 				"edition": "Standard",
 				"licenseType": "LicenseIncluded",
+				"dataProxyProperties": {
+					"connectVia": {
+						"type": "IntegrationRuntimeReference",
+						"referenceName": "integrationRuntime1"
+					},
+					"stagingLinkedService": {
+						"type": "LinkedServiceReference",
+						"referenceName": "AzureBlobStorage1"
+					}
+				},
 				"packageStores": [
 					{
 						"name": "Demopkgstore",
