@@ -50,6 +50,15 @@
 		"getmetadataLS_properties_typeProperties_userId": {
 			"value": "POLOUMI"
 		},
+		"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"value": "sqlsrvr02.database.windows.net"
+		},
+		"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"value": "debasish0890"
+		},
+		"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"value": ""
+		},
 		"containerUri": {
 			"value": ""
 		},

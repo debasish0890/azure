@@ -67,6 +67,17 @@
 			"type": "string",
 			"defaultValue": "POLOUMI"
 		},
+		"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"type": "string",
+			"defaultValue": "sqlsrvr02.database.windows.net"
+		},
+		"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"type": "string",
+			"defaultValue": "debasish0890"
+		},
+		"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"type": "secureString"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -156,6 +167,15 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+						"value": "[parameters('IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]"
+					},
+					"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+						"value": "[parameters('IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName')]"
+					},
+					"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+						"value": "[parameters('IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
 					}
 				}
 			},

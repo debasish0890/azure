@@ -66,6 +66,17 @@
 		"getmetadataLS_properties_typeProperties_userId": {
 			"type": "string",
 			"defaultValue": "POLOUMI"
+		},
+		"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"type": "string",
+			"defaultValue": "sqlsrvr02.database.windows.net"
+		},
+		"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"type": "string",
+			"defaultValue": "debasish0890"
+		},
+		"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"type": "secureString"
 		}
 	},
 	"variables": {
@@ -691,6 +702,46 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/getmetadata')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline3')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute SSIS Package1",
+						"type": "ExecuteSSISPackage",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"packageLocation": {
+								"packagePath": "package/demossisazure/Package.dtsx",
+								"type": "SSISDB"
+							},
+							"environmentPath": null,
+							"connectVia": {
+								"referenceName": "IRSSIS",
+								"type": "IntegrationRuntimeReference"
+							},
+							"loggingLevel": "Basic",
+							"projectConnectionManagers": {},
+							"packageConnectionManagers": {}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/IRSSIS')]"
 			]
 		},
 		{
@@ -1517,6 +1568,47 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/IRSSIS')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "East US",
+						"nodeSize": "Standard_D8_v3",
+						"numberOfNodes": 2,
+						"maxParallelExecutionsPerNode": 8
+					},
+					"ssisProperties": {
+						"catalogInfo": {
+							"catalogServerEndpoint": "[parameters('IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]",
+							"catalogAdminUserName": "[parameters('IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName')]",
+							"catalogAdminPassword": {
+								"type": "SecureString",
+								"value": "[parameters('IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
+							},
+							"catalogPricingTier": "S1"
+						},
+						"edition": "Standard",
+						"licenseType": "LicenseIncluded",
+						"packageStores": [
+							{
+								"name": "Demopkgstore",
+								"packageStoreLinkedService": {
+									"referenceName": "SalesDataLS",
+									"type": "LinkedServiceReference"
+								}
+							}
+						]
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SalesDataLS')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
@@ -1597,7 +1689,7 @@
 							"name": "Join1"
 						}
 					],
-					"script": "source(output(\n\t\tstreet as string,\n\t\tcity as string,\n\t\tzip as string,\n\t\tstate as string,\n\t\tbeds as integer,\n\t\tbaths as integer,\n\t\tsq__ft as string,\n\t\ttype as string,\n\t\tsale_date as string,\n\t\tprice as string,\n\t\tlatitude as string,\n\t\tlongitude as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true) ~> source1\nsource(output(\n\t\troom as integer,\n\t\trdesc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source2\nsource(output(\n\t\tbath as integer,\n\t\tbdesc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source3\nLookup1 split(type=='Condo',\n\ttype=='Residential',\n\ttype=='Multi-Family',\n\tdisjoint: false) ~> ConditionalSplit1@(Condo, Residential, Multi, Default)\nJoin1, source2 lookup(beds == room,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup1\nsource1, source3 join(baths == bath,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nConditionalSplit1@Condo sink(input(\n\t\tstreet as string,\n\t\tcity as string,\n\t\tzip as string,\n\t\tstate as string,\n\t\tbeds as string,\n\t\tbaths as string,\n\t\tsq__ft as string,\n\t\ttype as string,\n\t\tsale_date as string,\n\t\tprice as string,\n\t\tlatitude as string,\n\t\tlongitude as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1\nConditionalSplit1@Residential sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink2\nConditionalSplit1@Multi sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink3\nConditionalSplit1@Default sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink4"
+					"script": "source(output(\n\t\tstreet as string,\n\t\tcity as string,\n\t\tzip as string,\n\t\tstate as string,\n\t\tbeds as integer,\n\t\tbaths as integer,\n\t\tsq__ft as string,\n\t\ttype as string,\n\t\tsale_date as string,\n\t\tprice as string,\n\t\tlatitude as string,\n\t\tlongitude as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tinferDriftedColumnTypes: true) ~> source1\nsource(output(\n\t\troom as integer,\n\t\trdesc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tinferDriftedColumnTypes: true,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source2\nsource(output(\n\t\tbath as integer,\n\t\tbdesc as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tinferDriftedColumnTypes: true,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source3\nLookup1 split(type=='Condo',\n\ttype=='Residential',\n\ttype=='Multi-Family',\n\tdisjoint: false) ~> ConditionalSplit1@(Condo, Residential, Multi, Default)\nJoin1, source2 lookup(beds == room,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup1\nsource1, source3 join(baths == bath,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nConditionalSplit1@Condo sink(input(\n\t\tstreet as string,\n\t\tcity as string,\n\t\tzip as string,\n\t\tstate as string,\n\t\tbeds as string,\n\t\tbaths as string,\n\t\tsq__ft as string,\n\t\ttype as string,\n\t\tsale_date as string,\n\t\tprice as string,\n\t\tlatitude as string,\n\t\tlongitude as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1\nConditionalSplit1@Residential sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink2\nConditionalSplit1@Multi sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink3\nConditionalSplit1@Default sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink4"
 				}
 			},
 			"dependsOn": [
