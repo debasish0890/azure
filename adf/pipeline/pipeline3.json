@@ -29,7 +29,7 @@
 					"packageConnectionManagers": {
 						"Flat File Connection Manager": {
 							"ConnectionString": {
-								"value": "DESKTOP-5STHL1O\\Work\\Cars.csv"
+								"value": "\\\\DESKTOP-5STHL1O\\Work\\Cars.csv"
 							}
 						}
 					}
