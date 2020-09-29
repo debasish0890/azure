@@ -19,6 +19,7 @@
 						"packagePath": "package/demossisazure/Package.dtsx",
 						"type": "SSISDB"
 					},
+					"runtime": "x64",
 					"environmentPath": null,
 					"connectVia": {
 						"referenceName": "IRSSIS",
@@ -28,7 +29,7 @@
 					"packageConnectionManagers": {
 						"Flat File Connection Manager": {
 							"ConnectionString": {
-								"value": "\\\\DESKTOP-5STHL1O\\Work\\Cars.csv"
+								"value": "DESKTOP-5STHL1O\\Work\\Cars.csv"
 							}
 						}
 					}
