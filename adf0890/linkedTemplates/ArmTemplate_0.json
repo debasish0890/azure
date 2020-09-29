@@ -31,10 +31,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SalesDataLS'"
 		},
-		"getmetadataLS_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'getmetadataLS'"
-		},
 		"Insurance_LS2_properties_typeProperties_host": {
 			"type": "string",
 			"defaultValue": "//DESKTOP-2K6COFT/Users/Poloumi/Desktop/"
@@ -58,14 +54,6 @@
 		"SalesDataLS_properties_typeProperties_userId": {
 			"type": "string",
 			"defaultValue": "Debasish"
-		},
-		"getmetadataLS_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "\\\\DESKTOP-2K6COFT\\Users\\Poloumi\\Desktop"
-		},
-		"getmetadataLS_properties_typeProperties_userId": {
-			"type": "string",
-			"defaultValue": "POLOUMI"
 		}
 	},
 	"variables": {
@@ -113,6 +101,16 @@
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime2')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -612,30 +610,6 @@
 					"password": {
 						"type": "SecureString",
 						"value": "[parameters('SalesDataLS_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntime1",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/getmetadataLS')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "[parameters('getmetadataLS_properties_typeProperties_host')]",
-					"userId": "[parameters('getmetadataLS_properties_typeProperties_userId')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('getmetadataLS_password')]"
 					}
 				},
 				"connectVia": {

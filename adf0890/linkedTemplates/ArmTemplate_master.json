@@ -123,9 +123,6 @@
 					"SalesDataLS_password": {
 						"value": "[parameters('SalesDataLS_password')]"
 					},
-					"getmetadataLS_password": {
-						"value": "[parameters('getmetadataLS_password')]"
-					},
 					"Insurance_LS2_properties_typeProperties_host": {
 						"value": "[parameters('Insurance_LS2_properties_typeProperties_host')]"
 					},
@@ -143,12 +140,6 @@
 					},
 					"SalesDataLS_properties_typeProperties_userId": {
 						"value": "[parameters('SalesDataLS_properties_typeProperties_userId')]"
-					},
-					"getmetadataLS_properties_typeProperties_host": {
-						"value": "[parameters('getmetadataLS_properties_typeProperties_host')]"
-					},
-					"getmetadataLS_properties_typeProperties_userId": {
-						"value": "[parameters('getmetadataLS_properties_typeProperties_userId')]"
 					}
 				}
 			},
@@ -167,6 +158,15 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"getmetadataLS_password": {
+						"value": "[parameters('getmetadataLS_password')]"
+					},
+					"getmetadataLS_properties_typeProperties_host": {
+						"value": "[parameters('getmetadataLS_properties_typeProperties_host')]"
+					},
+					"getmetadataLS_properties_typeProperties_userId": {
+						"value": "[parameters('getmetadataLS_properties_typeProperties_userId')]"
 					},
 					"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
 						"value": "[parameters('IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]"

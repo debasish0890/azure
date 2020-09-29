@@ -7,6 +7,18 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf0890"
 		},
+		"getmetadataLS_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'getmetadataLS'"
+		},
+		"getmetadataLS_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "\\\\DESKTOP-2K6COFT\\Users\\Poloumi\\Desktop"
+		},
+		"getmetadataLS_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "POLOUMI"
+		},
 		"IRSSIS_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
 			"type": "string",
 			"defaultValue": "sqlsrvr02.database.windows.net"
@@ -23,6 +35,28 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/getmetadataLS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "FileServer",
+				"typeProperties": {
+					"host": "[parameters('getmetadataLS_properties_typeProperties_host')]",
+					"userId": "[parameters('getmetadataLS_properties_typeProperties_userId')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('getmetadataLS_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Incremental load')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -617,7 +651,9 @@
 				},
 				"schema": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/getmetadataLS')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/IRSSIS')]",
@@ -644,6 +680,16 @@
 						},
 						"edition": "Standard",
 						"licenseType": "LicenseIncluded",
+						"dataProxyProperties": {
+							"connectVia": {
+								"type": "IntegrationRuntimeReference",
+								"referenceName": "integrationRuntime1"
+							},
+							"stagingLinkedService": {
+								"type": "LinkedServiceReference",
+								"referenceName": "AzureBlobStorage1"
+							}
+						},
 						"packageStores": [
 							{
 								"name": "Demopkgstore",
@@ -990,7 +1036,13 @@
 							},
 							"loggingLevel": "Basic",
 							"projectConnectionManagers": {},
-							"packageConnectionManagers": {}
+							"packageConnectionManagers": {
+								"Flat File Connection Manager": {
+									"ConnectionString": {
+										"value": "\\\\DESKTOP-5STHL1O\\Work\\Cars.csv"
+									}
+								}
+							}
 						}
 					}
 				],

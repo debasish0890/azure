@@ -734,7 +734,13 @@
 							},
 							"loggingLevel": "Basic",
 							"projectConnectionManagers": {},
-							"packageConnectionManagers": {}
+							"packageConnectionManagers": {
+								"Flat File Connection Manager": {
+									"ConnectionString": {
+										"value": "\\\\DESKTOP-5STHL1O\\Work\\Cars.csv"
+									}
+								}
+							}
 						}
 					}
 				],
@@ -1592,6 +1598,16 @@
 						},
 						"edition": "Standard",
 						"licenseType": "LicenseIncluded",
+						"dataProxyProperties": {
+							"connectVia": {
+								"type": "IntegrationRuntimeReference",
+								"referenceName": "integrationRuntime1"
+							},
+							"stagingLinkedService": {
+								"type": "LinkedServiceReference",
+								"referenceName": "AzureBlobStorage1"
+							}
+						},
 						"packageStores": [
 							{
 								"name": "Demopkgstore",
@@ -1610,6 +1626,16 @@
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime2')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
 			"properties": {
