@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Execute SSIS Package1",
+				"name": "lift and shift",
 				"type": "ExecuteSSISPackage",
 				"dependsOn": [],
 				"policy": {
@@ -19,20 +19,12 @@
 						"packagePath": "package/demossisazure/Package.dtsx",
 						"type": "SSISDB"
 					},
-					"runtime": "x64",
 					"environmentPath": null,
 					"connectVia": {
 						"referenceName": "IRSSIS",
 						"type": "IntegrationRuntimeReference"
 					},
-					"loggingLevel": "Basic",
-					"packageConnectionManagers": {
-						"Flat File Connection Manager": {
-							"ConnectionString": {
-								"value": "\\\\DESKTOP-5STHL1O\\Work\\Cars.csv"
-							}
-						}
-					}
+					"loggingLevel": "Basic"
 				}
 			}
 		],
