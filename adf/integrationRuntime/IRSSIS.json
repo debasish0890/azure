@@ -7,7 +7,11 @@
 				"location": "East US",
 				"nodeSize": "Standard_D8_v3",
 				"numberOfNodes": 2,
-				"maxParallelExecutionsPerNode": 8
+				"maxParallelExecutionsPerNode": 8,
+				"vNetProperties": {
+					"vNetId": "/subscriptions/cfc55f52-bc10-4c10-b06f-01305b58e9d2/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet0890",
+					"subnet": "default"
+				}
 			},
 			"ssisProperties": {
 				"catalogInfo": {
@@ -24,7 +28,7 @@
 				"dataProxyProperties": {
 					"connectVia": {
 						"type": "IntegrationRuntimeReference",
-						"referenceName": "integrationRuntime2"
+						"referenceName": "integrationRuntime3"
 					},
 					"stagingLinkedService": {
 						"type": "LinkedServiceReference",
