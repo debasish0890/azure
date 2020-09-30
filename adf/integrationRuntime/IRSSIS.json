@@ -24,7 +24,7 @@
 				"dataProxyProperties": {
 					"connectVia": {
 						"type": "IntegrationRuntimeReference",
-						"referenceName": "integrationRuntime1"
+						"referenceName": "integrationRuntime2"
 					},
 					"stagingLinkedService": {
 						"type": "LinkedServiceReference",
