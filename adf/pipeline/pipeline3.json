@@ -24,7 +24,14 @@
 						"referenceName": "IRSSIS",
 						"type": "IntegrationRuntimeReference"
 					},
-					"loggingLevel": "Basic"
+					"loggingLevel": "Basic",
+					"packageConnectionManagers": {
+						"Flat File Connection Manager": {
+							"ConnectionString": {
+								"value": "\\\\DESKTOP-5STHL1O\\Work\\Cars.csv"
+							}
+						}
+					}
 				}
 			}
 		],
